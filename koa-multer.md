@@ -25,7 +25,7 @@ AWS S3 for JavaScript: https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/d
 - s3/node file upload example:<br>
 https://charlie-choi.tistory.com/248<br>
 https://yangeok.github.io/node.js/2019/03/22/s3-upload.html<br>
-- https://medium.com/@varad911/aws-s3-file-upload-and-download-in-node-js-with-koa-729eb8ae280b
+https://medium.com/@varad911/aws-s3-file-upload-and-download-in-node-js-with-koa-729eb8ae280b
 -
 
 ## 설치
