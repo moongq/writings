@@ -1,42 +1,33 @@
 # 해결해야할 것 !
-> `Audio 파일` CRUD with AWS `S3`.<br>
-Buffer와 Streams에 대해 한번 더 정리하고 넘어간다.
-
-<br>
+> `Image, Audio 파일` 업로드와 읽어오기 with `AWS S3`.<br>
 
 # 해결 과정 추측해보기
-1. `koa-multer`를 이용해서 서버상의 폴더에 업로드되게 만든다.
-2. AWS S3 테스트 계정을 만들고 필요한 설정들을 한다.
-3. `1번`의 업로드 장소를 `2번`에서 만든 S3로 변경한다.<br>
-AWS S3의 CRUD는 multer와 많이 다를 듯하다. 일단 부딛쳐봐야함.
-업로드는 어떻게 쉽게 될듯함. __but__ streaming은 난관이 있을듯함.
-4. 다른 API에서 이용할 수 있도록 모듈화한다.
-5. Test Code를 작성한다. __!! MUST !!__ <br>
-6. Documentation을 작성한다.
+1. multer를 쓰면 되나? nodejs에서는 multer로 파일 업로드를 하던데?
+2. 파일 업로드는 서버에서 하는건가? 프론트에선 못하나?
+3. S3 업로드할 때, 읽어올 때 권한 관리는? 아무나 다 받을 수 있으면 요금 폭탄 맞는거 아닌가?
+
+# 해결 과정
+## 1. multer를 쓰면 되나? nodejs에서는 multer로 파일 업로드를 하던데?
+구글을 다 찾아보니 `multer`와 `aws-sdk`를 이용해서 서버에서 업로드를 한다. 좀더 쉬운 방법은 `multers3`라는 npm module이 있다. 정~말 쉽게 S3에 업로드하게 해준다. AWS S3 권한 설정하는게 훨씬 어려울 정도로 쉽게 만들어져있다. 업로드는 뚝딱 할 수 있다. (multer에 대한 자료가 필요하다면 밑의 참고 자료를 참고!)
+
+## 2. 파일 업로드는 서버에서 하는건가? 프론트에선 못하나?
+음 서버에서 업로드하면 파일이 서버를 거쳐야 한다는 건데? 파일들은 용량이 꽤 큰데? 서버를 안거치는 방법이 있겠지?
+**있다.** 그게 바로 `presignedURI`. 찾아보니 AWS 블로그에 좋은 글이 올라와 있다. [내 번역글로 이동 ! Uploading to Amazon S3 directly from a web or mobile application](https://aws.amazon.com/blogs/compute/uploading-to-amazon-s3-directly-from-a-web-or-mobile-application/)
+
 
 <br>
 
-# 문제 해결하기
-
-## 이용할 자료
-- koa-multer:<br>https://www.npmjs.com/package/koa-multer<br>
-디테일한 multer 자료: https://github.com/expressjs/multer<br>
-AWS S3 for JavaScript: https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/developer-guide/s3-example-creating-buckets.html
+## 참고 자료
+- koa-multer:<br>
+  - https://www.npmjs.com/package/koa-multer<br>
+- 디테일한 multer 자료: <br>
+  - https://github.com/expressjs/multer<br>
+- AWS S3 for JavaScript:<br> 
+  - https://docs.aws.amazon.com/ko_kr/sdk-for-javascript/v2/developer-guide/s3-example-creating-buckets.html
 - s3/node file upload example:<br>
-https://charlie-choi.tistory.com/248<br>
-https://yangeok.github.io/node.js/2019/03/22/s3-upload.html<br>
-https://medium.com/@varad911/aws-s3-file-upload-and-download-in-node-js-with-koa-729eb8ae280b
--
-
-## 설치
-```npm i koa-multer```
-
-
-
----
----
----
-# 최고의 Media Streaming 방법은 무엇인가.
----
-# 키워드
-- `progressive download` vs `streming`
+  - https://charlie-choi.tistory.com/248<br>
+  - https://yangeok.github.io/node.js/2019/03/22/s3-upload.html<br>
+  - https://medium.com/@varad911/aws-s3-file-upload-and-download-in-node-js-with-koa-729eb8ae280b
+- presignedURI<br>
+  - Upload a File to an S3 Pre-Signed URL with React Native<br>https://codedaily.io/tutorials/179/Upload-a-File-to-an-S3-Pre-Signed-URL-with-React-Native<br>
+  - Uploading to Amazon S3 directly from a web or mobile application<br>https://aws.amazon.com/blogs/compute/uploading-to-amazon-s3-directly-from-a-web-or-mobile-application/
