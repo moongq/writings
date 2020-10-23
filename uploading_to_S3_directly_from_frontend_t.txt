@@ -1,0 +1,1 @@
+uploading_to_S3_directly_from_frontend_translation.md
